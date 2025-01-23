@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{050B4EF0-8E06-435F-942D-C5D1C0E7CED0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserService", "UserService", "{33786B3C-795F-428E-B456-3AF64DD73A0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildNights.UserService.Api", "Services\UserService\WildNights.UserService.Api\WildNights.UserService.Api.csproj", "{5FEF857D-922E-4077-A8D2-4B291F979348}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildNights.UserService.Application", "Services\UserService\WildNights.UserService.Application\WildNights.UserService.Application.csproj", "{BA283855-EB60-4024-8AE1-8DE7783964BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildNights.UserService.Contracts", "Services\UserService\WildNights.UserService.Contracts\WildNights.UserService.Contracts.csproj", "{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildNights.UserService.Domain", "Services\UserService\WildNights.UserService.Domain\WildNights.UserService.Domain.csproj", "{5F02816A-8216-4FD6-84E2-EE718BF1D6E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildNights.UserService.Infrastructure", "Services\UserService\WildNights.UserService.Infrastructure\WildNights.UserService.Infrastructure.csproj", "{9452D4FA-5B7C-472C-8C32-54FE2CE3C092}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FEF857D-922E-4077-A8D2-4B291F979348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FEF857D-922E-4077-A8D2-4B291F979348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FEF857D-922E-4077-A8D2-4B291F979348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FEF857D-922E-4077-A8D2-4B291F979348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA283855-EB60-4024-8AE1-8DE7783964BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA283855-EB60-4024-8AE1-8DE7783964BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA283855-EB60-4024-8AE1-8DE7783964BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA283855-EB60-4024-8AE1-8DE7783964BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F02816A-8216-4FD6-84E2-EE718BF1D6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F02816A-8216-4FD6-84E2-EE718BF1D6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F02816A-8216-4FD6-84E2-EE718BF1D6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F02816A-8216-4FD6-84E2-EE718BF1D6E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9452D4FA-5B7C-472C-8C32-54FE2CE3C092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9452D4FA-5B7C-472C-8C32-54FE2CE3C092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9452D4FA-5B7C-472C-8C32-54FE2CE3C092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9452D4FA-5B7C-472C-8C32-54FE2CE3C092}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33786B3C-795F-428E-B456-3AF64DD73A0B} = {050B4EF0-8E06-435F-942D-C5D1C0E7CED0}
+		{5FEF857D-922E-4077-A8D2-4B291F979348} = {33786B3C-795F-428E-B456-3AF64DD73A0B}
+		{BA283855-EB60-4024-8AE1-8DE7783964BB} = {33786B3C-795F-428E-B456-3AF64DD73A0B}
+		{986FE6A4-2BBB-4876-BF1B-CF8BE2314BA5} = {33786B3C-795F-428E-B456-3AF64DD73A0B}
+		{5F02816A-8216-4FD6-84E2-EE718BF1D6E5} = {33786B3C-795F-428E-B456-3AF64DD73A0B}
+		{9452D4FA-5B7C-472C-8C32-54FE2CE3C092} = {33786B3C-795F-428E-B456-3AF64DD73A0B}
+	EndGlobalSection
+EndGlobal
