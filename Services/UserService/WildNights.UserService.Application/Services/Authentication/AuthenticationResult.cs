@@ -1,8 +1,7 @@
-﻿namespace WildNights.UserService.Application.Services.Authentication;
+﻿using WildNights.UserService.Domain.Entites;
+
+namespace WildNights.UserService.Application.Services.Authentication;
 
 public record AuthenticationResult(
-    Guid id,
-    string FirstName,
-    string LastName,
-    string Email,
+    User User,
     string Token);

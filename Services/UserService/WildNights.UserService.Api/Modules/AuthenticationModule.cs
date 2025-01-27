@@ -22,10 +22,10 @@ public class AuthenticationModule : IModule
                 request.FirstName, request.LastName, request.Email, request.Password);
 
             var registerResponse = new AuthenticationResponse(
-                registerResult.id,
-                registerResult.FirstName, 
-                registerResult.LastName, 
-                registerResult.Email,
+                registerResult.User.Id,
+                registerResult.User.FirstName, 
+                registerResult.User.LastName, 
+                registerResult.User.Email,
                 registerResult.Token);
 
             return Results.Ok(registerResponse);
@@ -37,10 +37,10 @@ public class AuthenticationModule : IModule
                 request.Email, request.Password);
 
             var loginResponse = new AuthenticationResponse(
-                loginResult.id,
-                loginResult.FirstName,
-                loginResult.LastName,
-                loginResult.Email,
+                loginResult.User.Id,
+                loginResult.User.FirstName,
+                loginResult.User.LastName,
+                loginResult.User.Email,
                 loginResult.Token);
 
             return Results.Ok(loginResponse);
