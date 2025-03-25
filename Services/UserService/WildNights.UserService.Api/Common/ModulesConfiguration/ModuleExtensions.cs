@@ -1,4 +1,5 @@
-﻿using WildNights.UserService.Api.Common.Interfaces;
+﻿using System.Reflection;
+using WildNights.UserService.Api.Common.Interfaces;
 
 namespace WildNights.UserService.Api.Common.ModulesConfiguration;
 
@@ -29,10 +30,12 @@ public static class ModuleExtensions
 
     private static IEnumerable<IModule> DiscoverModules()
     {
-        return typeof(IModule).Assembly
+        var modules = typeof(IModule).Assembly
             .GetTypes()
             .Where(p => p.IsClass && p.IsAssignableTo(typeof(IModule)))
             .Select(Activator.CreateInstance)
             .Cast<IModule>();
+
+        return modules;
     }
 }

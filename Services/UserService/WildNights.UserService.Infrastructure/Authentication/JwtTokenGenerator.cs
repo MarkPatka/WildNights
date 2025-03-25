@@ -11,7 +11,6 @@ namespace WildNights.UserService.Infrastructure.Authentication;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
-
     private readonly JwtSettings _settings;
 
     public JwtTokenGenerator(IOptions<JwtSettings> settings)

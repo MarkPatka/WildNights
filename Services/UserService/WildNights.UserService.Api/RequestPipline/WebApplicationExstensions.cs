@@ -1,13 +1,20 @@
-﻿namespace WildNights.UserService.Api.RequestPipline;
+﻿using WildNights.UserService.Api.Common.ModulesConfiguration;
+
+namespace WildNights.UserService.Api.RequestPipline;
 
 public static class WebApplicationExstensions
 {
-    public static WebApplication UseGlobalErrorHandling(this WebApplication app)
+    public static WebApplication ConfigureWebApplication(this WebApplication app)
     {
-        app.UseExceptionHandler("/error");
-
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        app.MapEndpoints();
+        app.UseHttpsRedirection();
+        app.UseExceptionHandler("/error");   
         
-
         return app;
     }
 }

@@ -1,4 +1,5 @@
-﻿using WildNights.UserService.Application.Common.Interfaces.Authentication;
+﻿using WildNights.UserService.Application.Common.Errors;
+using WildNights.UserService.Application.Common.Interfaces.Authentication;
 using WildNights.UserService.Application.Common.Interfaces.Persistence;
 using WildNights.UserService.Domain.Entites;
 
@@ -34,12 +35,11 @@ public class AuthenticationService : IAuthenticationService
         return new AuthenticationResult(user, token);
     }
 
-    public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+    public AuthenticationResult Register(
+        string firstName, string lastName, string email, string password)
     {
         if (_userRepository.GetUserByEmail(email) is not null)
-        {
-            throw new Exception("Invalid credentials");
-        }
+            throw new DuplicateEmailException();
 
         var user = new User 
         {

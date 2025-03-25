@@ -1,8 +1,12 @@
-﻿namespace WildNights.UserService.Api.Common.Errors;
+﻿using System.Net;
+using WildNights.UserService.Application.Common.Errors;
 
-public class ServiceException(int statusCode, string message) : Exception
+namespace WildNights.UserService.Api.Common.Errors;
+
+public class ServiceException(HttpStatusCode statusCode, string message) 
+    : Exception, IServiceException
 {
-    public int StatusCode { get; } = statusCode;
+    public HttpStatusCode StatusCode => statusCode;
 
-    public string ErrorMessage { get; } = message;
+    public string ErrorMessage => message;
 }

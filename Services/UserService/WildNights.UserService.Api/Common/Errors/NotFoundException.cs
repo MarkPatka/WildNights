@@ -1,7 +1,9 @@
-﻿namespace WildNights.UserService.Api.Common.Errors;
+﻿using System.Net;
+
+namespace WildNights.UserService.Api.Common.Errors;
 
 public class NotFoundExcepton(string message) 
-    : ServiceException(StatusCodes.Status404NotFound, message)
+    : ServiceException(HttpStatusCode.Conflict, message)
 {
      
 }
