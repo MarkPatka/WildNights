@@ -1,4 +1,5 @@
-﻿using WildNights.UserService.Api.Common.Interfaces;
+﻿using WildNights.UserService.Api.Common.Error;
+using WildNights.UserService.Api.Common.Interfaces;
 using WildNights.UserService.Application.Common.Errors;
 using WildNights.UserService.Contracts.Authentication;
 using AuthenticationService = WildNights.UserService.Application.Services.Authentication.AuthenticationService;
@@ -34,10 +35,10 @@ public class AuthenticationModule : IModule
 
                 return Results.Ok(registerResponse);
             }
-            catch (DuplicateEmailException)
+            catch (DuplicateEmailError err)
             {
-                throw new DuplicateEmailException();
-            }            
+                throw new ServiceError(err.StatusCode, err.ErrorMessage);
+            }           
         });
 
         endpoints.MapPost("auth/login", (LoginRequest request, IAuthenticationService _authenticationService) =>

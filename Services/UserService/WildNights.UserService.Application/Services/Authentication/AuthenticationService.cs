@@ -1,8 +1,8 @@
-﻿using WildNights.UserService.Application.Common.Errors;
+﻿using System.Net;
+using WildNights.UserService.Application.Common.Errors;
 using WildNights.UserService.Application.Common.Interfaces.Authentication;
 using WildNights.UserService.Application.Common.Interfaces.Persistence;
 using WildNights.UserService.Domain.Entites;
-
 namespace WildNights.UserService.Application.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
@@ -38,8 +38,9 @@ public class AuthenticationService : IAuthenticationService
     public AuthenticationResult Register(
         string firstName, string lastName, string email, string password)
     {
+
         if (_userRepository.GetUserByEmail(email) is not null)
-            throw new DuplicateEmailException();
+            throw new DuplicateEmailError();
 
         var user = new User 
         {

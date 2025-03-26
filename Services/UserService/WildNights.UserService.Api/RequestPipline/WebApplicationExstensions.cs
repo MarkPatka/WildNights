@@ -11,10 +11,30 @@ public static class WebApplicationExstensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.MapEndpoints();
-        app.UseHttpsRedirection();
-        app.UseExceptionHandler("/error");   
-        
+
+        app.MapEndpoints()
+           .UseHttpsRedirection()
+           .UseExceptionHandler()
+           ;
+
         return app;
     }
+
+    //public static WebApplication AddGlobalErrorHandling(this WebApplication app)
+    //{
+    //    app.UseExceptionHandler(exceptionHandlerApp =>
+    //        exceptionHandlerApp.Run(async httpContext =>
+    //        {
+    //            var pds = httpContext.RequestServices.GetService<IProblemDetailsService>();
+
+    //            if (pds == null || !await pds.TryWriteAsync(new() { HttpContext = httpContext }))
+    //            {
+    //                await httpContext.Response.WriteAsync("Fallback: An error occurred.");
+    //            }
+    //        }));
+        
+    //    return app;
+    //}
 }
+
+
