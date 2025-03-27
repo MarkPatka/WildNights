@@ -1,30 +1,33 @@
-﻿using WildNights.UserService.Api.Common.Error;
+﻿using MediatR;
+using WildNights.UserService.Api.Common.Error;
 using WildNights.UserService.Api.Common.Interfaces;
-using WildNights.UserService.Application.Common.Errors;
+using WildNights.UserService.Application.Authentication.Commands.Register;
+using WildNights.UserService.Application.Authentication.Queries.Login;
 using WildNights.UserService.Contracts.Authentication;
-using AuthenticationService = WildNights.UserService.Application.Services.Authentication.AuthenticationService;
-using IAuthenticationService = WildNights.UserService.Application.Services.Authentication.IAuthenticationService;
+using WildNights.UserService.Domain.Common.Errors.Abstract;
 
 namespace WildNights.UserService.Api.Modules;
 
 public class AuthenticationModule : IModule
 {
     public IServiceCollection RegisterModule(IServiceCollection services)
-    {
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-
+    {        
         return services;
     }
 
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("auth/register", (RegisterRequest request, IAuthenticationService _authenticationService) =>
+        endpoints.MapPost("auth/register", async (RegisterRequest request, IMediator _mediator) =>
         {
             try
             {
-                var registerResult = _authenticationService.Register(
-                    request.FirstName, request.LastName, request.Email, request.Password);
+                var registerCommand = new RegisterCommand(
+                    request.FirstName, 
+                    request.LastName, 
+                    request.Email, 
+                    request.Password);
+                
+                var registerResult = await _mediator.Send(registerCommand);                
 
                 var registerResponse = new AuthenticationResponse(
                     registerResult.User.Id,
@@ -35,25 +38,35 @@ public class AuthenticationModule : IModule
 
                 return Results.Ok(registerResponse);
             }
-            catch (DuplicateEmailError err)
+            catch (Error err)
             {
-                throw new ServiceError(err.StatusCode, err.ErrorMessage);
+                throw new ServiceError((int)err.StatusCode, err.ErrorMessage);
             }           
         });
 
-        endpoints.MapPost("auth/login", (LoginRequest request, IAuthenticationService _authenticationService) =>
+        endpoints.MapPost("auth/login", async (LoginRequest request, IMediator _mediator) =>
         {
-            var loginResult = _authenticationService.Login(
-                request.Email, request.Password);
+            try
+            {
+                var loginQuery = new LoginQuery(
+                    request.Email, 
+                    request.Password);
 
-            var loginResponse = new AuthenticationResponse(
-                loginResult.User.Id,
-                loginResult.User.FirstName,
-                loginResult.User.LastName,
-                loginResult.User.Email,
-                loginResult.Token);
+                var authenticationResult = await _mediator.Send(loginQuery);
 
-            return Results.Ok(loginResponse);
+                var loginResponse = new AuthenticationResponse(
+                    authenticationResult.User.Id,
+                    authenticationResult.User.FirstName,
+                    authenticationResult.User.LastName,
+                    authenticationResult.User.Email,
+                    authenticationResult.Token);
+
+                return Results.Ok(loginResponse);
+            }
+            catch (Error err)
+            {
+                throw new ServiceError((int)err.StatusCode, err.ErrorMessage);
+            }
         });
         return endpoints;
     }
