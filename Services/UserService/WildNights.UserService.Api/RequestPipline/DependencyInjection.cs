@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using Mapster;
+using MapsterMapper;
+using Microsoft.AspNetCore.Http.Features;
 using System.Diagnostics;
+using System.Reflection;
 using WildNights.UserService.Api.Common.Error;
 using WildNights.UserService.Api.Common.ModulesConfiguration;
 
@@ -13,6 +16,7 @@ public static class DependencyInjection
         services
             .RegisterModules()
             .AddEndpointsApiExplorer()
+            .AddMappings()
             .AddSwaggerGen()
             .ConfigureProblemDetails();
 
@@ -39,6 +43,17 @@ public static class DependencyInjection
                 context.ProblemDetails.Extensions["traceId"] = activity?.Id;
             };
         });
+        return services;
+    }
+
+    public static IServiceCollection AddMappings(
+        this IServiceCollection services)
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+        config.Scan(Assembly.GetExecutingAssembly());
+
+        services.AddSingleton(config);
+        services.AddScoped<IMapper, ServiceMapper>();
         return services;
     }
 }

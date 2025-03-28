@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using WildNights.UserService.Api.Common.ModulesConfiguration;
 using WildNights.UserService.Api.RequestPipline;
 using WildNights.UserService.Application;
 using WildNights.UserService.Infrastructure;

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using MapsterMapper;
+using MediatR;
 using WildNights.UserService.Api.Common.Error;
 using WildNights.UserService.Api.Common.Interfaces;
 using WildNights.UserService.Application.Authentication.Commands.Register;
@@ -17,25 +18,13 @@ public class AuthenticationModule : IModule
 
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("auth/register", async (RegisterRequest request, IMediator _mediator) =>
+        endpoints.MapPost("auth/register", async (RegisterRequest request, ISender _mediator, IMapper _mapper) =>
         {
             try
             {
-                var registerCommand = new RegisterCommand(
-                    request.FirstName, 
-                    request.LastName, 
-                    request.Email, 
-                    request.Password);
-                
+                var registerCommand = _mapper.Map<RegisterCommand>(request);
                 var registerResult = await _mediator.Send(registerCommand);                
-
-                var registerResponse = new AuthenticationResponse(
-                    registerResult.User.Id,
-                    registerResult.User.FirstName,
-                    registerResult.User.LastName,
-                    registerResult.User.Email,
-                    registerResult.Token);
-
+                var registerResponse = _mapper.Map<AuthenticationResponse>(registerResult);
                 return Results.Ok(registerResponse);
             }
             catch (Error err)
@@ -44,23 +33,13 @@ public class AuthenticationModule : IModule
             }           
         });
 
-        endpoints.MapPost("auth/login", async (LoginRequest request, IMediator _mediator) =>
+        endpoints.MapPost("auth/login", async (LoginRequest request, ISender _mediator, IMapper _mapper) =>
         {
             try
             {
-                var loginQuery = new LoginQuery(
-                    request.Email, 
-                    request.Password);
-
+                var loginQuery = _mapper.Map<LoginQuery>(request);
                 var authenticationResult = await _mediator.Send(loginQuery);
-
-                var loginResponse = new AuthenticationResponse(
-                    authenticationResult.User.Id,
-                    authenticationResult.User.FirstName,
-                    authenticationResult.User.LastName,
-                    authenticationResult.User.Email,
-                    authenticationResult.Token);
-
+                var loginResponse = _mapper.Map<AuthenticationResponse>(authenticationResult);
                 return Results.Ok(loginResponse);
             }
             catch (Error err)

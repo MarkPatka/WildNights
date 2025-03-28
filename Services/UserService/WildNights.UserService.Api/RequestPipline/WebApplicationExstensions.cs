@@ -4,7 +4,8 @@ namespace WildNights.UserService.Api.RequestPipline;
 
 public static class WebApplicationExstensions
 {
-    public static WebApplication ConfigureWebApplication(this WebApplication app)
+    public static WebApplication ConfigureWebApplication(
+        this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {

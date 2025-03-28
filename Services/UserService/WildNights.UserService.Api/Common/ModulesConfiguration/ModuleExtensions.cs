@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using WildNights.UserService.Api.Common.Interfaces;
+﻿using WildNights.UserService.Api.Common.Interfaces;
 
 namespace WildNights.UserService.Api.Common.ModulesConfiguration;
 

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using WildNights.UserService.Application.Authentication.Commands.Register;
 using WildNights.UserService.Application.Authentication.Common;
 using WildNights.UserService.Application.Common.Interfaces.Authentication;
 using WildNights.UserService.Application.Common.Interfaces.Persistence;
