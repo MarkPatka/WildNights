@@ -26,10 +26,10 @@ public class LoginQueryHandler
         CancellationToken cancellationToken)
     {
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
-            throw AuthenticationErrors.USER_NOT_EXIST;        
+            throw AuthenticationError.USER_NOT_EXIST;        
 
         if (user.Password != query.Password)
-            throw AuthenticationErrors.INVALID_CREDENTIALS;
+            throw AuthenticationError.INVALID_CREDENTIALS;
 
         var token = _jwtTokenGenerator.GenerateJwtToken(user);
         

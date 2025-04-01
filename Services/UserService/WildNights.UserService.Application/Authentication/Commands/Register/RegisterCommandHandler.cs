@@ -26,7 +26,7 @@ public class RegisterCommandHandler
         CancellationToken cancellationToken)
     {
         if (_userRepository.GetUserByEmail(command.Email) is not null)
-            throw AuthenticationErrors.USER_EXISTS;
+            throw AuthenticationError.USER_EXISTS;
 
         var user = new User
         {
