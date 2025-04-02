@@ -4,7 +4,7 @@ using WildNights.UserService.Domain.Common.Errors.Abstract;
 namespace WildNights.UserService.Domain.Common.Errors.Models;
 
 public class ValidationError(string message, HttpStatusCode httpStatusCode, IReadOnlyDictionary<string, string[]> errorsDictionary) 
-    : Error(nameof(ValidationError), message)
+    : Error(ErrorType.VALIDATION, message)
 {
     public IReadOnlyDictionary<string, string[]> Errors => errorsDictionary;
 

@@ -1,7 +1,7 @@
 ﻿namespace WildNights.UserService.Domain.Common.Errors.Abstract;
 
-public abstract class Error(string name, string message) 
+public abstract class Error(ErrorType type, string message) 
     : Exception(message)
 {
-    public string Name { get; private set; } = name;
+    public ErrorType Type { get; private set; } = type;
 }

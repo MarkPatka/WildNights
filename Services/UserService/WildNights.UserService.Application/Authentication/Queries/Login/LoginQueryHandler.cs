@@ -2,6 +2,7 @@
 using WildNights.UserService.Application.Authentication.Common;
 using WildNights.UserService.Application.Common.Interfaces.Authentication;
 using WildNights.UserService.Application.Common.Interfaces.Persistence;
+using WildNights.UserService.Domain.Common.Errors.Abstract;
 using WildNights.UserService.Domain.Common.Errors.Models;
 using WildNights.UserService.Domain.Entites;
 
@@ -26,13 +27,22 @@ public class LoginQueryHandler
         CancellationToken cancellationToken)
     {
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
-            throw AuthenticationError.USER_NOT_EXIST;        
+        {
+            throw new AuthenticationError(
+                ErrorType.AUTHENTICATION.Description ?? "Invalid credentials", 
+                System.Net.HttpStatusCode.Conflict,
+                "SCR: Invalid email entered");
+        }
 
         if (user.Password != query.Password)
-            throw AuthenticationError.INVALID_CREDENTIALS;
+        {
+            throw new AuthenticationError(
+                ErrorType.AUTHENTICATION.Description ?? "Invalid credentials",
+                System.Net.HttpStatusCode.Conflict,
+                "SCR: Invalid password entered");
+        }
 
-        var token = _jwtTokenGenerator.GenerateJwtToken(user);
-        
+        var token = _jwtTokenGenerator.GenerateJwtToken(user);        
         return new AuthenticationResult(user, token);
     }
 }

@@ -5,6 +5,7 @@ using WildNights.UserService.Api.Common.Interfaces;
 using WildNights.UserService.Application.Authentication.Commands.Register;
 using WildNights.UserService.Application.Authentication.Queries.Login;
 using WildNights.UserService.Contracts.Authentication;
+using WildNights.UserService.Domain.Common.Errors.Abstract;
 using WildNights.UserService.Domain.Common.Errors.Models;
 
 namespace WildNights.UserService.Api.Modules;
@@ -29,11 +30,16 @@ public class AuthenticationModule : IModule
             }
             catch (AuthenticationError err)
             {
-                throw new ServiceError((int)err.HttpStatusCode, err.Message);
+                throw new ServiceError((int)err.HttpStatusCode, err.Message, ErrorType.AUTHENTICATION, err.Comment);
             }
             catch (ValidationError err) 
             {
-                throw new AggregateError(err.Message, err.Flatten(), (int)err.HttpStatusCode);
+                var errors = err.Flatten();
+                if (errors.Count > 1)
+                {
+                    throw new AggregateError((int)err.HttpStatusCode, ErrorType.VALIDATION, errors);
+                }
+                throw new ServiceError((int)err.HttpStatusCode, err.Message, ErrorType.VALIDATION);
             }
         });
 
@@ -48,7 +54,7 @@ public class AuthenticationModule : IModule
             }
             catch (AuthenticationError err)
             {
-                throw new ServiceError((int)err.HttpStatusCode, err.Message);
+                throw new ServiceError((int)err.HttpStatusCode, err.Message, ErrorType.AUTHENTICATION, err.Comment);
             }
         });
         return endpoints;

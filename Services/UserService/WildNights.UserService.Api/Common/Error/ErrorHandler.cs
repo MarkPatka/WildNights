@@ -19,17 +19,15 @@ public class ErrorHandler : IExceptionHandler
         CancellationToken cancellationToken)
     {
         if (exception is not ServiceError serviceError) 
-        {
             return true;
-        }
 
         var problemDetails = new ProblemDetails
         {
             Status = (int)serviceError.StatusCode,
-            Title = serviceError.ErrorMessage,
-            Detail = exception.Message,
-            Type = serviceError.StatusCode.ToString()
+            Title = serviceError.Message,
+            Detail = serviceError.Comment,    
         };
+        problemDetails.Extensions.Add("type", serviceError.ErrorType);
 
         var isProblemWritten = await _problemDetailsService.TryWriteAsync(
             new ProblemDetailsContext

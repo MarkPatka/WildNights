@@ -2,6 +2,7 @@
 using WildNights.UserService.Application.Authentication.Common;
 using WildNights.UserService.Application.Common.Interfaces.Authentication;
 using WildNights.UserService.Application.Common.Interfaces.Persistence;
+using WildNights.UserService.Domain.Common.Errors.Abstract;
 using WildNights.UserService.Domain.Common.Errors.Models;
 using WildNights.UserService.Domain.Entites;
 
@@ -26,7 +27,12 @@ public class RegisterCommandHandler
         CancellationToken cancellationToken)
     {
         if (_userRepository.GetUserByEmail(command.Email) is not null)
-            throw AuthenticationError.USER_EXISTS;
+        {
+            throw new AuthenticationError(
+                ErrorType.AUTHENTICATION.Description ?? "Invalid credentials",
+                System.Net.HttpStatusCode.Conflict,
+                "SCR: Attempt to register a user with an already registered email");
+        }            
 
         var user = new User
         {
@@ -36,8 +42,7 @@ public class RegisterCommandHandler
             Password = command.Password
         };
 
-        var token = _jwtTokenGenerator.GenerateJwtToken(user);
-        
+        var token = _jwtTokenGenerator.GenerateJwtToken(user);        
         return new AuthenticationResult(user, token);
     }
 }

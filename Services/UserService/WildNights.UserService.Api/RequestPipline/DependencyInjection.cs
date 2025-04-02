@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Reflection;
 using WildNights.UserService.Api.Common.Error;
 using WildNights.UserService.Api.Common.ModulesConfiguration;
+using WildNights.UserService.Domain.Common.Errors.Abstract;
 
 namespace WildNights.UserService.Api.RequestPipline;
 
